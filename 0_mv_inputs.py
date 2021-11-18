@@ -1,0 +1,21 @@
+
+import os
+from subprocess import run
+
+forcing_folder = 'M02_EnergyPlus_Forcing_Historical'
+file_list = os.listdir(forcing_folder)
+
+for var_name in ['T2', 'RH', 'Q2', 'GLW', 'PSFC', 'WINDS', 'WINDD', 'SWDOWN']:
+    run(['mkdir', os.path.join(forcing_folder, var_name)])
+run(['mkdir', os.path.join(forcing_folder, 'meta')])
+run(['mkdir', os.path.join(forcing_folder, 'time_series')]) # time series weather data for all grids in CSV format for each var
+run(['mkdir', os.path.join(forcing_folder, 'grids_csv')]) # time series weather data for all vars in CSV format for each grid
+run(['mkdir', os.path.join(forcing_folder, 'wrf_epw')]) # time series weather data for all vars in CSV format for each grid
+
+for file_name in file_list:
+    for var_name in ['T2', 'RH', 'Q2', 'GLW', 'PSFC', 'WINDS', 'WINDD', 'SWDOWN']:
+        if var_name in file_name:
+            run(['mv', os.path.join(forcing_folder, file_name), os.path.join(forcing_folder, var_name, file_name)])
+
+    
+
